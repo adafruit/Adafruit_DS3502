@@ -68,10 +68,10 @@ bool Adafruit_DS3502::begin(uint8_t i2c_address, TwoWire *wire) {
 */
 /**************************************************************************/
 
-uint8_t Adafruit_DS3502::getWiper(void){
-    Adafruit_BusIO_Register wiper =  
+uint8_t Adafruit_DS3502::getWiper(void) {
+  Adafruit_BusIO_Register wiper =
       Adafruit_BusIO_Register(i2c_dev, DS3502_WIPER, 1);
-    return wiper.read();
+  return wiper.read();
 }
 /**************************************************************************/
 /*!
@@ -80,35 +80,35 @@ uint8_t Adafruit_DS3502::getWiper(void){
             The new wiper value to set. Must be from 0-127
 */
 /**************************************************************************/
-void Adafruit_DS3502::setWiper(uint8_t new_wiper_value){
-    if ((new_wiper_value > 127) || (new_wiper_value < 0)){
-      return;
-    }
-    Adafruit_BusIO_Register wiper =  
+void Adafruit_DS3502::setWiper(uint8_t new_wiper_value) {
+  if ((new_wiper_value > 127) || (new_wiper_value < 0)) {
+    return;
+  }
+  Adafruit_BusIO_Register wiper =
       Adafruit_BusIO_Register(i2c_dev, DS3502_WIPER, 1);
-    wiper.write(new_wiper_value);
+  wiper.write(new_wiper_value);
 }
 
 /**************************************************************************/
 /*!
     @brief Sets the Wiper and IVR (Initial Value Register) to the given value.
     @param  new_wiper_default
-            The new wiper default to be set the wiper and default wiper value to.
-            The wiper register will be set to the given value when written and
-            when the device is powered on. Must be from 0-127
+            The new wiper default to be set the wiper and default wiper value
+   to. The wiper register will be set to the given value when written and when
+   the device is powered on. Must be from 0-127
 */
 /**************************************************************************/
-void Adafruit_DS3502::setWiperDefault(uint8_t new_wiper_default){
-    if ((new_wiper_default> 127) || (new_wiper_default < 0)){
-      return;
-    }
+void Adafruit_DS3502::setWiperDefault(uint8_t new_wiper_default) {
+  if ((new_wiper_default > 127) || (new_wiper_default < 0)) {
+    return;
+  }
 
-    Adafruit_BusIO_Register wiper =  
+  Adafruit_BusIO_Register wiper =
       Adafruit_BusIO_Register(i2c_dev, DS3502_WIPER, 1);
-    
-    mode_selector->write(0x00); // set mode to write default on wiper write
-    wiper.write(new_wiper_default); // write the new wiper value which carries over to the IVR
-    delay(100); // delay to allow EEPROM write to IVR to finish
-    mode_selector->write(0x80);
-}
 
+  mode_selector->write(0x00);     // set mode to write default on wiper write
+  wiper.write(new_wiper_default); // write the new wiper value which carries
+                                  // over to the IVR
+  delay(100); // delay to allow EEPROM write to IVR to finish
+  mode_selector->write(0x80);
+}

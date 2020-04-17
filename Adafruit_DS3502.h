@@ -20,13 +20,13 @@
 #include "Arduino.h"
 #include <Wire.h>
 
-#include <Adafruit_I2CDevice.h>
 #include <Adafruit_BusIO_Register.h>
+#include <Adafruit_I2CDevice.h>
 
 #define DS3502_I2CADDR_DEFAULT 0x28 ///< DS3502 default I2C address
 
-#define DS3502_WIPER  0x00 ///< Wiper value register
-#define DS3502_MODE   0x02 ///< Mode selection register
+#define DS3502_WIPER 0x00 ///< Wiper value register
+#define DS3502_MODE 0x02  ///< Mode selection register
 
 /*!
  *    @brief  Class that stores state and functions for interacting with
@@ -35,14 +35,14 @@
 class Adafruit_DS3502 {
 public:
   Adafruit_DS3502();
-  bool begin(uint8_t i2c_addr=DS3502_I2CADDR_DEFAULT, TwoWire *wire = &Wire);
+  bool begin(uint8_t i2c_addr = DS3502_I2CADDR_DEFAULT, TwoWire *wire = &Wire);
   uint8_t getWiper(void);
   void setWiper(uint8_t new_wiper_value);
   void setWiperDefault(uint8_t new_wiper_default);
 
+  Adafruit_BusIO_Register
+      *mode_selector; ///< BusIO Register for selecting the write mode
 
-  Adafruit_BusIO_Register *mode_selector; ///< BusIO Register for selecting the write mode
-  
 private:
   Adafruit_I2CDevice *i2c_dev;
 };
